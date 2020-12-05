@@ -1,15 +1,6 @@
 module Main where
 
 import Text.Regex.TDFA ((=~))
-import Prelude
-
--- http://stackoverflow.com/questions/4978578/ddg#4981265
-wordsWhen :: (Char -> Bool) -> String -> [String]
-wordsWhen p s = case dropWhile p s of
-  "" -> []
-  s' -> w : wordsWhen p s''
-    where
-      (w, s'') = break p s'
 
 parse :: String -> (Integer, Integer, Char, String)
 parse s = cast matches
@@ -32,7 +23,7 @@ validB (first, second, chr, pass) = validBInt (fromIntegral first, fromIntegral 
 main :: IO ()
 main = do
   contents <- readFile "input.txt"
-  let lines = wordsWhen (== '\n') contents
-  let parsed = map parse lines
+  let l = lines contents
+  let parsed = map parse l
   print $ foldl (\i line -> if valid line then i + 1 else i) 0 parsed
   print $ foldl (\i line -> if validB line then i + 1 else i) 0 parsed
