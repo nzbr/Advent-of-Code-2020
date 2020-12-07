@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-mkdir "$1"
+stack new "$1" simple -p "author-name:nzbr" -p "author-email: " -p "category:aoc2020" -p "github-username:nzbr"
 cd "$1"
-cabal init -l ISC -e "" -x ""
 
 cat >hie.yaml <<EOF
 cradle:
-    cabal:
-        component: "exe:$1"
+    stack:
 EOF
+cp -v ../LICENSE LICENSE
